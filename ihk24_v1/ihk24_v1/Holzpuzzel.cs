@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ihk24_v1
 {
-    class Holzpuzzel: Holzspielzeug
+    class Holzpuzzel : Holzspielzeug
     {
-        private static bool isSolved=false;
-        protected int Breite { get; set; }
+        private static bool isSolved = false;
+        public int Breite { get; set; }
         protected int Laenge { get; set; }
-        protected int Ebenen { get; set; }
+        public int Ebenen { get; set; }
         public List<Holzstreifen> Streifen { get; set; }
         public int[,,] Puzzle { get; set; }
         public string Kommentar { get; set; }
@@ -33,10 +33,10 @@ namespace ihk24_v1
 
         public List<Holzstreifen> removeStreifen(List<Holzstreifen> holzstreifenList, string id)
         {
-            var result = new List<Holzstreifen>( holzstreifenList);
-            for(int i=0; i< result.Count; i++)
+            var result = new List<Holzstreifen>(holzstreifenList);
+            for (int i = 0; i < result.Count; i++)
             {
-                if(result[i].ID == id)
+                if (result[i].ID == id)
                 {
                     result.RemoveAt(i);
                     break;
@@ -47,16 +47,16 @@ namespace ihk24_v1
 
         private bool checkPuzzleArray(List<Holzstreifen> speicher)
         {
-            Kodierung kodi= new Kodierung();
+            Kodierung kodi = new Kodierung();
             createPuzzleArray(speicher);
-           
-                for (int z = 0; z < Ebenen; z++)
-                {
-                
+
+            for (int z = 0; z < Ebenen; z++)
+            {
                 for (int y = 0; y < Breite; y++)
                 {
                     for (int x = 0; x < Breite; x++)
                     {
+
                         if (z == 0)
                         {
                             if (kodi.isValidNachfolger(0, Puzzle[x, y, z], Puzzle[x, y, z + 1]) == false)
@@ -78,14 +78,14 @@ namespace ihk24_v1
                                 return false;
                             }
                         }
-                        
+
                     }
 
                 }
 
             }
 
-            LoesungStreifenList = speicher;
+            LoesungStreifenList = new List<Holzstreifen> (speicher);
             return true;
 
         }
@@ -95,13 +95,13 @@ namespace ihk24_v1
             int currEbene = 0;
             int curStein = 0;
             int counter = 0;
-            foreach(Holzstreifen hs in speicher)
+            foreach (Holzstreifen hs in speicher)
             {
                 counter++;
                 if (currEbene % 2 == 0)
                 {
                     //  Puzzle[, ,currEbene]
-                    for(int i = 0; i < hs.Elemente.Count; i++)
+                    for (int i = 0; i < hs.Elemente.Count; i++)
                     {
                         Puzzle[curStein, i, currEbene] = hs.Elemente[i];
                     }
@@ -116,33 +116,50 @@ namespace ihk24_v1
                     }
                     curStein++;
                 }
-                if (counter% Laenge == 0)
+                if (counter % Laenge == 0)
                 {
                     curStein = 0;
+                    currEbene++;
                 }
             }
         }
 
         public void solve()
         {
-            foreach(Holzstreifen s in Streifen)
+            foreach (Holzstreifen s in Streifen)
             {
                 List<Holzstreifen> result = new List<Holzstreifen>();
                 result.Add(s);
-                streifenPlazieren( removeStreifen(Streifen,s.ID), result);
+                streifenPlazieren(removeStreifen(Streifen, s.ID), result);
+                if (isSolved)
+                {
+                    return;
+                }
                 //aendert auch die streifen in s //todo maybe
                 s.rotieren('y');
                 List<Holzstreifen> result2 = new List<Holzstreifen>();
                 result2.Add(s);
-                streifenPlazieren( removeStreifen(Streifen, s.ID), result2);
+                streifenPlazieren(removeStreifen(Streifen, s.ID), result2);
+                if (isSolved)
+                {
+                    return;
+                }
                 s.rotieren('x');
                 List<Holzstreifen> result3 = new List<Holzstreifen>();
                 result3.Add(s);
-                streifenPlazieren( removeStreifen(Streifen, s.ID), result3);
+                streifenPlazieren(removeStreifen(Streifen, s.ID), result3);
+                if (isSolved)
+                {
+                    return;
+                }
                 s.rotieren('y');
                 List<Holzstreifen> result4 = new List<Holzstreifen>();
                 result4.Add(s);
-                streifenPlazieren( removeStreifen(Streifen, s.ID), result4);
+                streifenPlazieren(removeStreifen(Streifen, s.ID), result4);
+                if (isSolved)
+                {
+                    return;
+                }
             }
         }
         private void streifenPlazieren(List<Holzstreifen> vorhandeneStreifen, List<Holzstreifen> speicher)
@@ -153,7 +170,7 @@ namespace ihk24_v1
             }
             if (vorhandeneStreifen.Count == 0)
             {
-               isSolved= checkPuzzleArray(speicher);
+                isSolved = checkPuzzleArray(speicher);
             }
             else
             {
@@ -162,19 +179,35 @@ namespace ihk24_v1
                     List<Holzstreifen> result = new List<Holzstreifen>(speicher);
                     result.Add(s);
                     streifenPlazieren(removeStreifen(vorhandeneStreifen, s.ID), result);
+                    if (isSolved)
+                    {
+                        return;
+                    }
                     //aendert auch die streifen in s //todo maybe
                     s.rotieren('y');
                     List<Holzstreifen> result2 = new List<Holzstreifen>(speicher);
                     result2.Add(s);
                     streifenPlazieren(removeStreifen(vorhandeneStreifen, s.ID), result2);
+                    if (isSolved)
+                    {
+                        return;
+                    }
                     s.rotieren('x');
                     List<Holzstreifen> result3 = new List<Holzstreifen>(speicher);
                     result3.Add(s);
                     streifenPlazieren(removeStreifen(vorhandeneStreifen, s.ID), result3);
+                    if (isSolved)
+                    {
+                        return;
+                    }
                     s.rotieren('y');
                     List<Holzstreifen> result4 = new List<Holzstreifen>(speicher);
                     result4.Add(s);
                     streifenPlazieren(removeStreifen(vorhandeneStreifen, s.ID), result4);
+                    if (isSolved)
+                    {
+                        return;
+                    }
                 }
 
             }

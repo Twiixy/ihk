@@ -31,9 +31,13 @@ namespace ihk24_v1
             //Puzzle erstellen
             List<Holzpuzzel> holzPuzzelList=interP.createPuzzle();
 
-            holzPuzzelList[2].solve();
+            int solverx = 1;
+             
+            holzPuzzelList[solverx].solve();
 
-            List<Holzstreifen> test =holzPuzzelList[2].LoesungStreifenList;
+            List<Holzstreifen> test =holzPuzzelList[solverx].LoesungStreifenList;
+
+            interP.createAusgabefile(test, holzPuzzelList[solverx].Ebenen, holzPuzzelList[solverx].Breite, holzPuzzelList[solverx].Kommentar, holzPuzzelList[solverx].DimensionsString);
 
 
             Console.WriteLine("finish");

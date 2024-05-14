@@ -90,8 +90,9 @@ namespace ihk24_v1
 
 
 
-        public void createAusgabefile()
+        public void createAusgabefile(List<Holzstreifen> streifen, int ebenen, int breite, string kommentar, string dimstring)
         {
+            
 
 
             // textfile erstellen
@@ -104,8 +105,60 @@ namespace ihk24_v1
                 // Open the file in write mode
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
-                    // Write the text to the file
-                    writer.Write("test123");//todo ändern
+                    writer.Write(kommentar);//todo ändern
+                    writer.Write(dimstring+"\n");//todo ändern
+                    writer.Write("Anordnung der Teile" + "\n");//todo ändern
+                    int currEbene = 1;
+                    int counter = 0;
+                    string[,] arr = new string[breite, breite+1];
+                    foreach (Holzstreifen hs in streifen)
+                    {
+                        counter++;
+                        if (currEbene % 2 == 1)
+                        {
+                            for (int a = 0; a < hs.Elemente.Count; a++)
+                            {
+                                arr[counter - 1, a] = ""+hs.Elemente[a];
+                            }
+                            arr[counter - 1, hs.Elemente.Count]=hs.ID;
+                        }
+                        else
+                        {
+                            if(counter==1)
+                                 writer.Write("Ebene " + currEbene + "\n");
+                            string ausgabe = "";
+                            for(int a = 0; a < hs.Elemente.Count; a++)
+                            {
+                                ausgabe += hs.Elemente[a] + " ";
+                            }
+                            ausgabe += hs.ID+"\n";
+                            writer.Write(ausgabe);
+                        }
+                        if (counter == breite)
+                        {
+                            
+                            if (currEbene % 2 == 1)
+                            {
+                                writer.Write("Ebene " + currEbene + "\n");
+                                for (int y = 0; y < breite + 1; y++)
+                                {
+                                    string ausgabe = "";
+                                    
+                                    for (int x = 0; x < breite; x++)
+                                    {
+                                        ausgabe += arr[x, y]+" ";
+                                    }
+                                    writer.Write(ausgabe+"\n");
+                                }
+                            }
+                            if(currEbene!=ebenen)
+                                 writer.Write("\n");
+                            arr = new string[breite, breite];
+                            currEbene++;
+                            counter = 0;
+                        }
+
+                    }
                 }
 
                 // Console message indicating success
