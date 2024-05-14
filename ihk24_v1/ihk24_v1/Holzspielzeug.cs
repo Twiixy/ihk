@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ihk24_v1
 {
-    class Holzspielzeug
+    abstract class Holzspielzeug
     {
+        protected string Herstellername { get; set; }
+        protected int Preis { get; set; }
     }
 }

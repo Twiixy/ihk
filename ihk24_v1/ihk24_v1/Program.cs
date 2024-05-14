@@ -1,73 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ihk24_v1
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
-            // Fordern Sie den Benutzer auf, einen Ordnerpfad einzugeben
+            string Pfad = "";
+            string DateiName = "";
+            List<string> Endungen = new List<string>();
+
             Console.Write("Geben Sie den Ordnerpfad ein: ");
-            string ordnerPfad = Console.ReadLine();
-            string ausgabe = "";
+            //Pfad = Console.ReadLine();
+            Pfad = "C:\\Users\\di461643\\00000ihk\\ihk\\eingaben";
 
-            // Prüfen Sie, ob der Ordner existiert
-            if (Directory.Exists(ordnerPfad))
-            {
-                // Durchsuchen Sie den Ordner nach Textdateien
-                foreach (string datei in Directory.EnumerateFiles(ordnerPfad, "*.txt", SearchOption.AllDirectories))
-                {
-                    try
-                    {
-                        // Lesen Sie den Inhalt der Datei
-                        string dateiInhalt = File.ReadAllText(datei);
+            Console.Write("Geben Sie Endungen ein, die im Ordner geöffnet werden sollen (mit einem leerzeichen getrennt z.B. 'txt vm': ");
+            //string endungsString = Console.ReadLine();
+            string endungsString = "txt";
+            Endungen =new List<string>(endungsString.Split(" "));
 
-                        // Geben Sie den Dateinamen und Inhalt aus
-                        Console.WriteLine("Datei: " + datei);
-                        Console.WriteLine(dateiInhalt);
-                        ausgabe += dateiInhalt;
-                        Console.WriteLine("----------------------");
-                    }
-                    catch (IOException e)
-                    {
-                        Console.WriteLine("Fehler beim Lesen der Datei: " + datei + " - " + e.Message);
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("Ordner nicht gefunden: " + ordnerPfad);
-            }
+            Console.Write("Geben Sie einen Namen für die Resulttextdatei an: ");
+            //DateiName = Console.ReadLine();
+            DateiName = "a";
+
+            //Dateien einlesen
+            Interpreter interP = new Interpreter(Endungen, Pfad, DateiName);
+            //Puzzle erstellen
+            List<Holzpuzzel> holzPuzzelList=interP.createPuzzle();
+
+            holzPuzzelList[2].solve();
+
+            List<Holzstreifen> test =holzPuzzelList[2].LoesungStreifenList;
+
+
+            Console.WriteLine("finish");
 
 
 
 
 
-
-            // textfile erstellen
-            string filePath = @"C:\Users\Anwender\test\MyFile.txt";
-            string textContent = "This is the text to be written to the file.";
-
-            // Write the text to the file
-            try
-            {
-                // Open the file in write mode
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    // Write the text to the file
-                    writer.Write(ausgabe);
-                }
-
-                // Console message indicating success
-                Console.WriteLine("Text written to file successfully.");
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that occur during writing
-                Console.WriteLine("Error writing to file: " + ex.Message);
-            }
-
+           
 
 
         }
