@@ -31,7 +31,7 @@ namespace ihk24_v1
             //Puzzle erstellen
             List<Holzpuzzel> holzPuzzelList=interP.createPuzzle();
 
-            int solverx = 1;
+            int solverx = 0;
              
             holzPuzzelList[solverx].solve();
 

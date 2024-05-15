@@ -7,11 +7,29 @@ using System.Threading.Tasks;
 
 namespace ihk24_v1
 {
+    /// <summary>
+    /// Klasse um Holzpuzzel aus Textfiles zu erstellen und gelöste Puzzel als Ergebnisfile zu erstellen
+    /// </summary>
     class Interpreter
     {
+        /// <summary>
+        /// Endungen der zu suchenden Dateien in einem Ordner.
+        /// </summary>
         private List<string> Endung { get; set; }
+        /// <summary>
+        /// Absoluterpfad zum Ordner, der die Textfiles zur Erstellung des Programms hat.
+        /// </summary>
         private string Pfad { get; set; }
+        /// <summary>
+        /// Name der Lösungsdatei, die erstellt wird.
+        /// </summary>
         private string DateiName { get; set; }
+        /// <summary>
+        /// Erstellt ein Interpreterobjekt mit den notwendigen Parametern
+        /// </summary>
+        /// <param name="endungen">Endungen der zu suchenden Dateien in einem Ordner.</param>
+        /// <param name="pfad">Absoluterpfad zum Ordner, der die Textfiles zur Erstellung des Programms hat.</param>
+        /// <param name="dateiName">Name der Lösungsdatei, die erstellt wird.</param>
         public Interpreter(List<string> endungen, string pfad, string dateiName)
         {
             Endung = endungen;
@@ -20,6 +38,10 @@ namespace ihk24_v1
         }
 
 
+        /// <summary>
+        /// Erstellt Holzpuzzel mithilfe von Textdateien
+        /// </summary>
+        /// <returns>Gibt eine Liste aus erstellten Puzzel zurück.</returns>
         public List<Holzpuzzel> createPuzzle()
         {
             List<Holzpuzzel> result = new List<Holzpuzzel>();
@@ -89,7 +111,14 @@ namespace ihk24_v1
         }
 
 
-
+        /// <summary>
+        /// Erstellt ein Ausgabefile mit der geforderten Formatierung
+        /// </summary>
+        /// <param name="streifen">Liste der plazierten Streifen</param>
+        /// <param name="ebenen">Anzahl der Holzpuzzelebenen</param>
+        /// <param name="breite">Anzahl der möglichen zu plazierenden Holzstreifen pro Ebene</param>
+        /// <param name="kommentar">Kommentar aus dem Eingabefile</param>
+        /// <param name="dimstring">Dimensionsstring aus dem Eingabefile</param>
         public void createAusgabefile(List<Holzstreifen> streifen, int ebenen, int breite, string kommentar, string dimstring)
         {
             
@@ -153,20 +182,17 @@ namespace ihk24_v1
                             }
                             if(currEbene!=ebenen)
                                  writer.Write("\n");
-                            arr = new string[breite, breite];
+                            arr = new string[breite, breite+1];
                             currEbene++;
                             counter = 0;
                         }
 
                     }
                 }
-
-                // Console message indicating success
-                Console.WriteLine("Text written to file successfully.");
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that occur during writing
+                //File konnte nicht beschrieben werden
                 Console.WriteLine("Error writing to file: " + ex.Message);
             }
 

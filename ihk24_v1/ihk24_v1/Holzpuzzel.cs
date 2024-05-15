@@ -31,6 +31,12 @@ namespace ihk24_v1
             LoesungStreifenList = new List<Holzstreifen>();
         }
 
+        /// <summary>
+        /// Entfernt ein Holzstreifen aus der mitgelieferten Liste
+        /// </summary>
+        /// <param name="holzstreifenList">Liste von Holzstreifen</param>
+        /// <param name="id">Id des zu entfernenden Holzstreifens</param>
+        /// <returns></returns>
         public List<Holzstreifen> removeStreifen(List<Holzstreifen> holzstreifenList, string id)
         {
             var result = new List<Holzstreifen>(holzstreifenList);
@@ -45,6 +51,11 @@ namespace ihk24_v1
             return result;
         }
 
+        /// <summary>
+        /// Prüft ob das Holzpuzzle keine Bedingungen verletzt, indem es die isValidNachfolger Methode von Kodierung nutzt.
+        /// </summary>
+        /// <param name="speicher">Liste von plazierten Holzstreifen</param>
+        /// <returns></returns>
         private bool checkPuzzleArray(List<Holzstreifen> speicher)
         {
             Kodierung kodi = new Kodierung();
@@ -89,6 +100,11 @@ namespace ihk24_v1
             return true;
 
         }
+
+        /// <summary>
+        /// Erstellt ein dreidimensionales Array, welches eine mögliche Puzzelbox Aufstellung representiert.
+        /// </summary>
+        /// <param name="speicher">Liste von plazierten Holzstreifen</param>
         private void createPuzzleArray(List<Holzstreifen> speicher)
         {
             Puzzle = new int[Breite, Breite, Ebenen];
@@ -124,6 +140,9 @@ namespace ihk24_v1
             }
         }
 
+        /// <summary>
+        /// Löst das Puzzle indem die Methode rekursiv die Methode streifenPlazieren aufruft. 
+        /// </summary>
         public void solve()
         {
             foreach (Holzstreifen s in Streifen)
@@ -162,6 +181,12 @@ namespace ihk24_v1
                 }
             }
         }
+        /// <summary>
+        /// Rekursive Methode, die ein Puzzel-Array erstellt, sobald vorhandeneStreifen leer ist. 
+        /// Das Programm bricht ab wenn alle möglichen Holzstreifen-Kombinationen getestet wurden oder eine Lösung gefunden wurde.
+        /// </summary>
+        /// <param name="vorhandeneStreifen">Liste der noch zu nutzenden Streifen</param>
+        /// <param name="speicher">Erbebnisliste der plazierten Holzstreifen</param>
         private void streifenPlazieren(List<Holzstreifen> vorhandeneStreifen, List<Holzstreifen> speicher)
         {
             if (isSolved)
