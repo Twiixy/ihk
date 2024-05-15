@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleApp1": {
+      "commandName": "Project",
+      "commandLineArgs": "--file ..\\..\\..\\..\\Bsp4.txt"
+    }
+  }
+}

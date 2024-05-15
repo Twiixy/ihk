@@ -119,14 +119,15 @@ namespace ihk24_v1
         /// <param name="breite">Anzahl der möglichen zu plazierenden Holzstreifen pro Ebene</param>
         /// <param name="kommentar">Kommentar aus dem Eingabefile</param>
         /// <param name="dimstring">Dimensionsstring aus dem Eingabefile</param>
-        public void createAusgabefile(List<Holzstreifen> streifen, int ebenen, int breite, string kommentar, string dimstring)
+        /// <param name="dimstring">Nummer des gelösten Puzzels</param>
+        public void createAusgabefile(List<Holzstreifen> streifen, int ebenen, int breite, string kommentar, string dimstring,int number)
         {
             
 
 
             // textfile erstellen
             string filePath = @"C:\Users\di461643\00000ihk\ihk\";
-            filePath += DateiName + ".txt";
+            filePath += DateiName+number + ".txt";
 
             // Write the text to the file
             try

@@ -8,7 +8,7 @@ namespace ihk24_v1
 {
     class Holzpuzzel : Holzspielzeug
     {
-        private static bool isSolved = false;
+        private  bool isSolved = false;
         public int Breite { get; set; }
         protected int Laenge { get; set; }
         public int Ebenen { get; set; }
@@ -201,6 +201,11 @@ namespace ihk24_v1
             {
                 foreach (Holzstreifen s in vorhandeneStreifen)
                 {
+                    if (speicher.Count > Breite)
+                    {
+                        if (!checkPuzzleArray(speicher))
+                            return;
+                    }
                     List<Holzstreifen> result = new List<Holzstreifen>(speicher);
                     result.Add(s);
                     streifenPlazieren(removeStreifen(vorhandeneStreifen, s.ID), result);

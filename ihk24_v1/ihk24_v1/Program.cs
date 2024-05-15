@@ -30,16 +30,22 @@ namespace ihk24_v1
             Interpreter interP = new Interpreter(Endungen, Pfad, DateiName);
             //Puzzle erstellen
             List<Holzpuzzel> holzPuzzelList=interP.createPuzzle();
-
-            int solverx = 0;
-             
+            
+            int solverx = 2;
             holzPuzzelList[solverx].solve();
-
             List<Holzstreifen> test =holzPuzzelList[solverx].LoesungStreifenList;
-
-            interP.createAusgabefile(test, holzPuzzelList[solverx].Ebenen, holzPuzzelList[solverx].Breite, holzPuzzelList[solverx].Kommentar, holzPuzzelList[solverx].DimensionsString);
-
-
+            interP.createAusgabefile(test, holzPuzzelList[solverx].Ebenen, holzPuzzelList[solverx].Breite,
+            holzPuzzelList[solverx].Kommentar, holzPuzzelList[solverx].DimensionsString,solverx);
+            
+            /*
+            int i = 0;
+            foreach(Holzpuzzel hp in holzPuzzelList)
+            {
+                i++;
+                hp.solve();
+                interP.createAusgabefile(hp.LoesungStreifenList, hp.Ebenen, hp.Breite,hp.Kommentar, hp.DimensionsString,i);
+            }
+            */
             Console.WriteLine("finish");
 
 
