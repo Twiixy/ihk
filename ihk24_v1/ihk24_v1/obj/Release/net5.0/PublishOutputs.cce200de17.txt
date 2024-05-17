@@ -1,0 +1,5 @@
+C:\Users\Anwender\Desktop\Abgabe\Ausführbare_Datei\ihk24_v1.exe
+C:\Users\Anwender\Desktop\Abgabe\Ausführbare_Datei\ihk24_v1.dll
+C:\Users\Anwender\Desktop\Abgabe\Ausführbare_Datei\ihk24_v1.deps.json
+C:\Users\Anwender\Desktop\Abgabe\Ausführbare_Datei\ihk24_v1.runtimeconfig.json
+C:\Users\Anwender\Desktop\Abgabe\Ausführbare_Datei\ihk24_v1.pdb

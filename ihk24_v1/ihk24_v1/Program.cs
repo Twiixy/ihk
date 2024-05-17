@@ -34,12 +34,11 @@ namespace ihk24_v1
 
                 Console.Write("Geben Sie Endungen ein, die im Ordner geöffnet werden sollen (mit einem leerzeichen getrennt z.B. 'txt vm': ");
                 endungsString = Console.ReadLine();
-                Endungen = new List<string>(endungsString.Split(" "));
 
                 Console.Write("Geben Sie einen Namen für die Ausgabedatei an: ");
                 DateiName = Console.ReadLine();
             }
-
+            Endungen = new List<string>(endungsString.Split(" "));
 
 
             //Dateien einlesen
