@@ -19,6 +19,9 @@ namespace ihk24_v1.Tests
 
         }
 
+        /// <summary>
+        /// Tetstet die "rotieren" Methode der Basisklasse.
+        /// </summary>
         private void rotationsTests()
         {
             bool isCorrect = true;
