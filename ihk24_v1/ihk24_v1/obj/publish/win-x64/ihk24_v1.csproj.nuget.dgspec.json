@@ -11,7 +11,7 @@
         "projectName": "ihk24_v1",
         "projectPath": "C:\\Users\\Anwender\\Desktop\\ihksgit\\currProjekt\\ihk\\ihk24_v1\\ihk24_v1\\ihk24_v1.csproj",
         "packagesPath": "C:\\Users\\Anwender\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anwender\\Desktop\\ihksgit\\currProjekt\\ihk\\ihk24_v1\\ihk24_v1\\obj\\",
+        "outputPath": "C:\\Users\\Anwender\\Desktop\\ihksgit\\currProjekt\\ihk\\ihk24_v1\\ihk24_v1\\obj\\publish\\win-x64\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -60,6 +60,11 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

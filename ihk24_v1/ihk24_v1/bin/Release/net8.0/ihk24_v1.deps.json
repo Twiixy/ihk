@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "ihk24_v1/1.0.0": {
+        "runtime": {
+          "ihk24_v1.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ihk24_v1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
