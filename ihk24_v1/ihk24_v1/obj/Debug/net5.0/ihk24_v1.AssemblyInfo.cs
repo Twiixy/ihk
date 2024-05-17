@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ihk24_v1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdb22515ac862f64b219cf0f02898c03691c2709")]
 [assembly: System.Reflection.AssemblyProductAttribute("ihk24_v1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ihk24_v1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ihk24_v1.Puzzle;
+using ihk24_v1.Tests;
 
 namespace ihk24_v1
 {
@@ -15,7 +17,7 @@ namespace ihk24_v1
         /// <summary>
         /// Endungen der zu suchenden Dateien in einem Ordner.
         /// </summary>
-        private List<string> Endung { get; set; }
+        protected List<string> Endung { get; set; }
         /// <summary>
         /// Absoluterpfad zum Ordner, der die Textfiles zur Erstellung des Programms hat.
         /// </summary>
@@ -86,14 +88,40 @@ namespace ihk24_v1
                                 {
                                     string[] tmp = data.Split(" ");
                                     id = tmp[0];
-                                    int[] tmpInt = tmp[1].Split(",").Select(int.Parse).ToArray();
-                                    streifenList.Add(new Holzstreifen(id, new List<int>(tmpInt)));
+                                    try
+                                    {
+                                        int[] tmpInt = tmp[1].Split(",").Select(int.Parse).ToArray();
+                                        streifenList.Add(new Holzstreifen(id, new List<int>(tmpInt)));
+                                    }
+                                    catch
+                                    {
+                                        Console.WriteLine(data+" kann nicht in ein Holzstreifen umgewandelt werden.");
+                                    }
 
                                 }
                             }
                             string[] dimArray = dim.Split(" ");
-                            int[] dimIntArray = dimArray[1].Split(",").Select(int.Parse).ToArray();
-                            result.Add(new Holzpuzzel(dimIntArray[0], dimIntArray[2], kommentar, dim, streifenList));
+                            int[] dimIntArray=new int[0];
+                            try
+                            {  
+                            dimIntArray = dimArray[1].Split(",").Select(int.Parse).ToArray();
+                            }
+                            catch
+                            {
+                               
+                            }
+                            //wenn es kommentare und dimensionsangaben gibt, wird das Puzzle erstellt
+                            if (kommentar.Length > 0 && dim.Length > 0 && streifenList.Count > 0)
+                            {
+                                try
+                                {
+                                    result.Add(new Holzpuzzel(dimIntArray[0], dimIntArray[2], kommentar, dim, streifenList));
+                                }
+                                catch { }
+                                
+                            }
+                            else
+                                Console.WriteLine("Mit der Datei "+ datei+" konnte kein Holzpuzzle erstellt werden.");
 
                         }
                         catch (IOException e)
@@ -119,15 +147,18 @@ namespace ihk24_v1
         /// <param name="breite">Anzahl der möglichen zu plazierenden Holzstreifen pro Ebene</param>
         /// <param name="kommentar">Kommentar aus dem Eingabefile</param>
         /// <param name="dimstring">Dimensionsstring aus dem Eingabefile</param>
-        /// <param name="dimstring">Nummer des gelösten Puzzels</param>
+        /// <param name="number">Nummer des gelösten Puzzels</param>
         public void createAusgabefile(List<Holzstreifen> streifen, int ebenen, int breite, string kommentar, string dimstring,int number)
         {
-            
+
 
 
             // textfile erstellen
-            string filePath = @"C:\Users\di461643\00000ihk\ihk\";
-            filePath += DateiName+number + ".txt";
+            // string filePath = @"C:\Users\di461643\00000ihk\ihk\";
+            //string filePath = @"C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\";
+            string filePath = Pfad;
+            filePath +="/"+ DateiName+number + ".txt";
+           
 
             // Write the text to the file
             try
@@ -135,59 +166,70 @@ namespace ihk24_v1
                 // Open the file in write mode
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
-                    writer.Write(kommentar);//todo ändern
-                    writer.Write(dimstring+"\n");//todo ändern
-                    writer.Write("Anordnung der Teile" + "\n");//todo ändern
-                    int currEbene = 1;
-                    int counter = 0;
-                    string[,] arr = new string[breite, breite+1];
-                    foreach (Holzstreifen hs in streifen)
+                    if (streifen.Count < ebenen * breite)
                     {
-                        counter++;
-                        if (currEbene % 2 == 1)
+                        writer.Write("Keine Loesung gefunden!");
+                    }
+                    else
+                    {
+                        writer.Write(kommentar);
+                        writer.Write(dimstring + "\n");
+                        writer.Write("Anordnung der Teile" + "\n");
+                        int currEbene = 1;
+                        int counter = 0;
+                        string[,] arr = new string[breite, breite + 1];
+                        try
                         {
-                            for (int a = 0; a < hs.Elemente.Count; a++)
+                            foreach (Holzstreifen hs in streifen)
                             {
-                                arr[counter - 1, a] = ""+hs.Elemente[a];
-                            }
-                            arr[counter - 1, hs.Elemente.Count]=hs.ID;
-                        }
-                        else
-                        {
-                            if(counter==1)
-                                 writer.Write("Ebene " + currEbene + "\n");
-                            string ausgabe = "";
-                            for(int a = 0; a < hs.Elemente.Count; a++)
-                            {
-                                ausgabe += hs.Elemente[a] + " ";
-                            }
-                            ausgabe += hs.ID+"\n";
-                            writer.Write(ausgabe);
-                        }
-                        if (counter == breite)
-                        {
-                            
-                            if (currEbene % 2 == 1)
-                            {
-                                writer.Write("Ebene " + currEbene + "\n");
-                                for (int y = 0; y < breite + 1; y++)
+                                counter++;
+                                if (currEbene % 2 == 1)
                                 {
-                                    string ausgabe = "";
-                                    
-                                    for (int x = 0; x < breite; x++)
+                                    for (int a = 0; a < hs.Elemente.Count; a++)
                                     {
-                                        ausgabe += arr[x, y]+" ";
+                                        arr[counter - 1, a] = "" + hs.Elemente[a];
                                     }
-                                    writer.Write(ausgabe+"\n");
+                                    arr[counter - 1, hs.Elemente.Count] = hs.ID;
                                 }
-                            }
-                            if(currEbene!=ebenen)
-                                 writer.Write("\n");
-                            arr = new string[breite, breite+1];
-                            currEbene++;
-                            counter = 0;
-                        }
+                                else
+                                {
+                                    if (counter == 1)
+                                        writer.Write("Ebene " + currEbene + "\n");
+                                    string ausgabe = "";
+                                    for (int a = 0; a < hs.Elemente.Count; a++)
+                                    {
+                                        ausgabe += hs.Elemente[a] + " ";
+                                    }
+                                    ausgabe += hs.ID + "\n";
+                                    writer.Write(ausgabe);
+                                }
+                                if (counter == breite)
+                                {
 
+                                    if (currEbene % 2 == 1)
+                                    {
+                                        writer.Write("Ebene " + currEbene + "\n");
+                                        for (int y = 0; y < breite + 1; y++)
+                                        {
+                                            string ausgabe = "";
+
+                                            for (int x = 0; x < breite; x++)
+                                            {
+                                                ausgabe += arr[x, y] + " ";
+                                            }
+                                            writer.Write(ausgabe + "\n");
+                                        }
+                                    }
+                                    if (currEbene != ebenen)
+                                        writer.Write("\n");
+                                    arr = new string[breite, breite + 1];
+                                    currEbene++;
+                                    counter = 0;
+                                }
+
+                            }
+                        }
+                        catch { }
                     }
                 }
             }

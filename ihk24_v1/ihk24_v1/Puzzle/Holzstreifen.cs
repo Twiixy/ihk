@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ihk24_v1
+namespace ihk24_v1.Puzzle
 {
     /// <summary>
     /// Klasse um die Holzstreifen zu simulieren. Enthält eine Liste der Holzstreifenelemente, die ID und ein bool-Wert, ob das Teil genutzt wurde.
@@ -15,9 +15,9 @@ namespace ihk24_v1
         /// Liste der Holzstreifenelemente
         /// </summary>
         public List<int> Elemente { get; set; }
-       /// <summary>
-       /// Id des Holzstreifens
-       /// </summary>
+        /// <summary>
+        /// Id des Holzstreifens
+        /// </summary>
         public string ID { get; set; }
         /// <summary>
         /// True, falls das Holzstreifenteil genutzt wurde
@@ -42,10 +42,10 @@ namespace ihk24_v1
         /// <param name="achse">Gibt die Rotierungsachse an</param>
         public void rotieren(char achse)
         {
-            if ((achse=='y'|| achse == 'Y'))//gradzahl egal da man nur um 180° drehen darf
+            if (achse == 'y' || achse == 'Y')//gradzahl egal da man nur um 180° drehen darf
             {
                 List<int> rotierteElemente = new List<int>();
-                foreach(int element in Elemente)
+                foreach (int element in Elemente)
                 {
                     int elementNumber = element;
                     //aus oberen Halbkugeln werden untere und andersrum
@@ -57,7 +57,7 @@ namespace ihk24_v1
                 }
                 Elemente = rotierteElemente;
             }
-            if ((achse == 'x' || achse == 'X'))//gradzahl egal da man nur um 180° drehen darf
+            if (achse == 'x' || achse == 'X')//gradzahl egal da man nur um 180° drehen darf
             {
                 List<int> rotierteElemente = new List<int>();
                 foreach (int element in Elemente)

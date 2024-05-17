@@ -1,0 +1,15 @@
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\bin\Debug\net8.0\PuzzleSolver.exe
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\bin\Debug\net8.0\PuzzleSolver.deps.json
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\bin\Debug\net8.0\PuzzleSolver.runtimeconfig.json
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\bin\Debug\net8.0\PuzzleSolver.dll
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\bin\Debug\net8.0\PuzzleSolver.pdb
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\PuzzleSolver.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\PuzzleSolver.AssemblyInfoInputs.cache
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\PuzzleSolver.AssemblyInfo.cs
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\PuzzleSolver.csproj.CoreCompileInputs.cache
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\PuzzleSolver.sourcelink.json
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\PuzzleSolver.dll
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\refint\PuzzleSolver.dll
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\PuzzleSolver.pdb
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\PuzzleSolver.genruntimeconfig.cache
+C:\Users\Anwender\Desktop\ihksgit\currProjekt\ihk\PuzzleSolver\PuzzleSolver\obj\Debug\net8.0\ref\PuzzleSolver.dll

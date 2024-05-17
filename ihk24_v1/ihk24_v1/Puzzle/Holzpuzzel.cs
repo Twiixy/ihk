@@ -4,20 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ihk24_v1
+namespace ihk24_v1.Puzzle
 {
     class Holzpuzzel : Holzspielzeug
     {
-        private  bool isSolved = false;
+        private static Kodierung kodi = new Kodierung();
+        /// <summary>
+        /// True wenn der LoesungStreifenList eine Lösung beinhaltet
+        /// </summary>
+        private bool isSolved = false;
+        /// <summary>
+        /// Breite des Puzzles
+        /// </summary>
         public int Breite { get; set; }
+        /// <summary>
+        /// Länge des Puzzles
+        /// </summary>
         protected int Laenge { get; set; }
+        /// <summary>
+        /// Anzahl der Puzzleebenen
+        /// </summary>
         public int Ebenen { get; set; }
+        /// <summary>
+        /// Liste der Holzstreifen
+        /// </summary>
         public List<Holzstreifen> Streifen { get; set; }
+        /// <summary>
+        /// Simulation des ausgebauten Puzzles mittels dreidimensionalen Arrays
+        /// </summary>
         public int[,,] Puzzle { get; set; }
+        /// <summary>
+        /// Kommentar aus dem Eingabefile
+        /// </summary>
         public string Kommentar { get; set; }
-
+        /// <summary>
+        /// Lösung des Puzzles wenn man die Teile von links nach rechts und unten nach oben platzieren würde
+        /// </summary>
         public List<Holzstreifen> LoesungStreifenList { get; set; }
-
+        /// <summary>
+        /// Dimension aus Eingabedatei
+        /// </summary>
         public string DimensionsString { get; set; }
         public Holzpuzzel(int dimension, int ebenen, string kommentar, string dimensionString, List<Holzstreifen> holzStreifen)
         {
@@ -29,6 +55,47 @@ namespace ihk24_v1
             Kommentar = kommentar;
             Streifen = holzStreifen;
             LoesungStreifenList = new List<Holzstreifen>();
+            pruefeHolzstreifenIds();
+            if (!pruefeVollstaendigkeit())
+             throw new HolzpuzzelKonstruktorException("Puzzle ist unvollstaendig!");
+        }
+
+        /// <summary>
+        /// Prüft, ob jeder Streifen die nnotwendige Anzahl an Elementen besitzt und ob es genug Streifen gibt um das Puzzle zu lösen
+        /// </summary>
+        /// <returns>True falls das Puzzle vollständig ist</returns>
+        protected bool pruefeVollstaendigkeit()
+        {
+            foreach(Holzstreifen hs in Streifen)
+            {
+                if(hs.Elemente.Count!=Breite) return false;
+            }
+            if(Streifen.Count!=Ebenen*Breite) return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Prüft ob die Holzstreiben IDs eindeutig sind
+        /// </summary>
+        /// <returns>True falls die IDs eindeutig sind</returns>
+        protected bool pruefeHolzstreifenIds()
+        {
+            List<string> result= new List<string>();
+            var duplikate = Streifen.GroupBy(s => s.ID)
+                              .Where(g => g.Count() > 1);
+            if (duplikate.Any())
+            {
+                Console.WriteLine("Folgene Puzzelstreifenids gibt es mehrfach:");
+                foreach (var group in duplikate) { 
+                    Console.WriteLine(group.Key);
+                }
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("Es gibt keine Duplikate in der ID.");
+            }
+            return true;
         }
 
         /// <summary>
@@ -56,9 +123,9 @@ namespace ihk24_v1
         /// </summary>
         /// <param name="speicher">Liste von plazierten Holzstreifen</param>
         /// <returns></returns>
-        private bool checkPuzzleArray(List<Holzstreifen> speicher)
+        protected bool checkPuzzleArray(List<Holzstreifen> speicher)
         {
-            Kodierung kodi = new Kodierung();
+            
             createPuzzleArray(speicher);
 
             for (int z = 0; z < Ebenen; z++)
@@ -70,7 +137,14 @@ namespace ihk24_v1
 
                         if (z == 0)
                         {
-                            if (kodi.isValidNachfolger(0, Puzzle[x, y, z], Puzzle[x, y, z + 1]) == false)
+                            if (Ebenen == 1)
+                            {
+                                if (kodi.isValidNachfolger(0, Puzzle[x, y, z], 0) == false)
+                                {
+                                    return false;
+                                }
+                            }
+                            else if (kodi.isValidNachfolger(0, Puzzle[x, y, z], Puzzle[x, y, z + 1]) == false)
                             {
                                 return false;
                             }
@@ -96,7 +170,7 @@ namespace ihk24_v1
 
             }
 
-            LoesungStreifenList = new List<Holzstreifen> (speicher);
+            LoesungStreifenList = new List<Holzstreifen>(speicher);
             return true;
 
         }
@@ -105,7 +179,7 @@ namespace ihk24_v1
         /// Erstellt ein dreidimensionales Array, welches eine mögliche Puzzelbox Aufstellung representiert.
         /// </summary>
         /// <param name="speicher">Liste von plazierten Holzstreifen</param>
-        private void createPuzzleArray(List<Holzstreifen> speicher)
+        protected void createPuzzleArray(List<Holzstreifen> speicher)
         {
             Puzzle = new int[Breite, Breite, Ebenen];
             int currEbene = 0;
@@ -154,7 +228,6 @@ namespace ihk24_v1
                 {
                     return;
                 }
-                //aendert auch die streifen in s //todo maybe
                 s.rotieren('y');
                 List<Holzstreifen> result2 = new List<Holzstreifen>();
                 result2.Add(s);
@@ -187,7 +260,7 @@ namespace ihk24_v1
         /// </summary>
         /// <param name="vorhandeneStreifen">Liste der noch zu nutzenden Streifen</param>
         /// <param name="speicher">Erbebnisliste der plazierten Holzstreifen</param>
-        private void streifenPlazieren(List<Holzstreifen> vorhandeneStreifen, List<Holzstreifen> speicher)
+        protected void streifenPlazieren(List<Holzstreifen> vorhandeneStreifen, List<Holzstreifen> speicher)
         {
             if (isSolved)
             {
@@ -213,7 +286,6 @@ namespace ihk24_v1
                     {
                         return;
                     }
-                    //aendert auch die streifen in s //todo maybe
                     s.rotieren('y');
                     List<Holzstreifen> result2 = new List<Holzstreifen>(speicher);
                     result2.Add(s);
